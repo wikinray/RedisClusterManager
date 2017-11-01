@@ -29,4 +29,12 @@
 		<jedis.version>2.9.0</jedis.version>
 		<version>1.0.0-SNAPSHOT</version>
 	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.18</version>
+		</dependency>
+	</dependencies>
 </project>

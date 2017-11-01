@@ -40,4 +40,12 @@ public class ClusterServerCache {
 		}
 		clusterServers.put(c.getUuid(), servers);
 	}
+	
+	public static void updateClusters(List<D_ClusterInfo> cs){
+		for (D_ClusterInfo c : cs) {
+			if(!clusterExist(c.getUuid())){
+				updateServer(c, null);
+			}
+		}
+	}
 }

@@ -1,7 +1,9 @@
 package org.redis.manager.service;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.redis.manager.cluster.RedisClusterScan;
@@ -76,9 +78,13 @@ public class QueryService {
 		nodes.forEach(node->{
 			masters.add(new HostAndPort(node.getHost(), node.getPort()));
 		});
-		Object value = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("key", key);
 		JedisCluster jedis = new JedisCluster(masters);
+		Long ttl = jedis.ttl(key);
+		map.put("ttl", ttl);
 		try {
+			Object value = null;
 			String type = jedis.type(key);
 			switch (type) {
 			case "string":
@@ -99,10 +105,12 @@ public class QueryService {
 			default:
 				break;
 			}
+			map.put("value", value);
+			map.put("exist", value != null);
 		} finally {
 			jedis.close();
 		}
-		return value;
+		return map;
 	}
 
 	public void delete(String cluster, String key) throws Exception {

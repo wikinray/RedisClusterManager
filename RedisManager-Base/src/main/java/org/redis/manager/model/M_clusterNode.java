@@ -31,6 +31,10 @@ public class M_clusterNode {
 	public Integer getPort() {
 		return port;
 	}
+	public void setPort(String port) {
+		port = port.split("@")[0];
+		this.port = Integer.parseInt(port);
+	}
 	public void setPort(Integer port) {
 		this.port = port;
 	}
